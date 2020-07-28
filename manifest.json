@@ -1,0 +1,31 @@
+{
+    "name": "Polarpod",
+    "version": "1.0",
+    "description": "Extension to call Polarpod api endpoints",
+    "author":"Matsukii (Matheus)",
+    "homepage_url":"https://github.com/matsukii/polarpod-extension",
+    "options_page": "options.html",
+    "permissions": [
+        "tabs",
+        "declarativeContent",
+        "contextMenus",
+        "storage",
+        "activeTab"
+        
+    ],
+    "optional_permissions":["https://*/", "http://*/"],
+    "background": {
+        "scripts": ["run.js"],
+        "persistent": false
+    },
+    "page_action": {
+        "default_popup": "popup.html",
+            "default_icon": {
+            "128": "assets/logo/app_icon-dark.png"
+        }
+    },
+    "icons": {
+        "128": "assets/logo/app_icon-dark.png"
+      },
+    "manifest_version": 2
+  }
