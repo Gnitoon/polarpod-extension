@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="google" content="notranslate">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	
+	<title>polarpod-extension - Options</title>
+	<link rel="stylesheet" href="options.css">
+	<link rel="stylesheet" href="../assets/corners.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <title>Polarpod - extension settings</title>
+	<link rel="shortcut icon" href="../assets/logo/app_icon-dark.png" type="image/x-icon">
+	
+	
+	<!-- Load some resources only in development environment -->
+	
+
+	<style>
+	
+		* {
+			font-family: 'Space Mono', sans-serif;
+		}
+
+
+		.polar-theme {
+			--polar-blue: #6FBAFF;
+			--polar-dark: #222222;
+			--polar-light: #FFFFFF;
+			
+			--polar-blue-fire: linear-gradient(190.3deg, #4DBFFF -4.08%, rgba(125, 203, 247, 0) 105.25%);
+			
+			--card-bg: linear-gradient(0deg, rgba(97, 0, 255, 0.05), rgba(97, 0, 255, 0.05));
+			--mini-card: linear-gradient(0deg, rgba(77, 175, 255, 0.05), rgba(77, 175, 255, 0.05));
+			
+			--link-hover: #008FDF;
+
+			--main-bg:
+				linear-gradient(192.53deg,
+					rgba(97, 0, 255, 0.05) 0%,
+					#63626405 95.51%),
+				linear-gradient(170.34deg,
+					rgba(111, 186, 255, 0.06) 0.82%,
+					rgba(255, 255, 255, 0.03) 96.48%),
+				linear-gradient(0deg, #151515, #151515),
+				#FFFFFF;
+
+			--checkbox-bg:
+				linear-gradient(0deg, rgba(77, 175, 255, 0.07),
+					rgba(77, 175, 255, 0.07)),
+				linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+
+			--dark-icon-0: #454545;
+			--dark-icon-1: #3d3d3d;
+			--dark-icon-2: #222222;
+
+			--light-icon-0: #FFFFFF;
+			--light-icon-1: #BABABA;
+			--light-icon-2: #646464;
+
+			--grey-5: #151515;
+			--grey-4: #222222;
+			--grey-3: #646464;
+			--grey-2: #909090;
+			--grey-2: #CECECE;
+			--grey-1: #F1F1F1;
+			--grey-0: #FFFFFF;
+
+			--text-light: #FFFFFF;
+			--text-sub: #F1F1F1;
+			--text-dark: #222222;
+
+			--text-shadown-tr-screen: 3px 3px 2px rgba(255,255,255,0.15);
+			--scrollbar-color: #3B4151;
+		}
+
+		body {
+			background: var(--main-bg);
+			background-repeat: no-repeat;
+			height: calc(100vh - 16px);
+			color: var(--text-light);
+			font-size: 110%;
+		}
+
+		.logo {
+			width: 180px;
+			padding: 20px;
+		}
+
+		.card {
+			background: var(--card-bg);
+			border-radius: 1px;
+			padding: 20px 29px;
+			width: -webkit-fill-available;
+			height: -webkit-fill-available;
+			margin: 0px 2px 0px 2px;
+		}
+
+		/* links */
+		@media all {
+			
+			.link{
+				text-decoration: none;
+				color: var(--polar-blue);
+				transition: all 200ms ease-in-out;
+			}
+			.link:hover{
+				text-shadow: var(--text-shadown-tr-screen);
+				font-size: 103%;
+				cursor: pointer;
+				border-radius: 3px;
+				background: var(--mini-card);
+				padding: 0px 3px 5px 0px;
+			}
+			.link:hover::before{
+				content: '[';
+			}
+			.link:hover::after{
+				content: ']';
+			}
+		}
+
+		.mini-card {
+			padding: 6px 25px;
+			/* background-image: url(./assets/mini-card-corners.svg); */
+			background: var(--mini-card);
+			font-weight: 600;
+			color: var(--polar-blue);
+			border-radius: 4px;
+			font-size: 110%;
+			position: relative;
+			min-width: 65px;
+			text-align: center;
+			transition: all 100ms ease-in-out;
+		}
+
+		.mini-card .corners {
+			width: 10px;
+			height: 7px;
+		}
+
+
+		/* menu  */
+		#content {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+
+		/* menu  */
+		@media all {
+
+			.actions {
+				width: 180px;
+				margin-left: 30px;
+				margin-right: 50px;
+				padding-top: 20px;
+			}
+
+			.action-item {
+				padding-left: 25px;
+				transition: all 20ms ease-in-out;
+				cursor: pointer;
+				user-select: none;
+				margin: 10px 10px;
+				font-weight: 300;
+			}
+
+			.action-item:hover {
+				padding: 0;
+				color: var(--polar-blue);
+			}
+
+			.action-item:hover::before {
+				content: '› [';
+			}
+
+			.action-item:hover::after {
+				content: ']';
+			}
+
+			/* item selected */
+			.ai-selected::before {
+				content: '› [';
+			}
+
+			.ai-selected::after {
+				content: ']';
+			}
+
+			.ai-selected {
+				padding: 0;
+				color: var(--polar-blue);
+			}
+
+			#selected-menu-item {
+				width: -webkit-fill-available;
+				height: auto;
+			}
+		}
+
+
+		
+		#contents-containet{
+			/* padding: 20px 29px; */
+			padding-left: 40px;
+			display: block;
+			/* background: var(--card-bg); */
+			padding-top: 20px;
+		}
+
+
+		#c-container-master{
+			position: absolute;
+			max-width: 50%;
+			max-height: 50vh;
+			width: -webkit-fill-available;
+			height: -webkit-fill-available;
+		}
+
+		#cc-sub-container{
+			position: relative;
+			width: inherit;
+			height: inherit;
+		}
+
+		#cc-sub-container .corners{
+			width: 20px;
+			height: 15px;
+		}
+
+		.text-card{
+			display: flex;
+		}
+		.text-card p{
+			margin: auto;
+			text-align: center;
+		}
+
+
+
+		.simplebar-track.simplebar-vertical{
+			margin-right: -15px !important;
+		}
+		.simplebar-scrollbar::before {
+			background-color: var(--scrollbar-color);
+			border-radius: 1.5px;
+		}
+
+
+		#openInApi .checkbox{
+			display: inline-block;
+			vertical-align: bottom;
+			float: right;
+		}
+
+
+	</style>
+
+
+</head>
+
+<body class="polar-theme">
+	<div id="polar"></div>
+	<script src="./options.js"></script>
+</body>
+
+</html>

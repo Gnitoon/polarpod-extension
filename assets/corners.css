@@ -1,0 +1,53 @@
+/* 
+
+add corners to a div using svg image
+
+***        ***
+*            *
+     div 
+*            *
+***        ***
+
+? add the SVGs on a position: relative div
+
+<img class="corners c-top-l" src="./assets/corner.svg" alt="">
+<img class="corners c-top-r" src="./assets/corner.svg" alt="">
+<img class="corners c-bot-l" src="./assets/corner.svg" alt="">
+<img class="corners c-bot-r" src="./assets/corner.svg" alt="">
+
+.corners does not set wisth, you may use the parent class/id and .corners
+
+* like this:
+
+.myDiv .corners{
+    width: 20px;
+    height: 20px;
+}
+
+*/
+
+
+.corners{
+    position: absolute;
+}
+.c-top-l, .c-top-r{
+    top: -1px;
+}
+.c-bot-l, .c-bot-r{
+    bottom: -1px;
+}
+.c-top-l{
+    left: -1.8px;
+    transform: scale(-1, -1) rotate(90deg);
+}
+.c-top-r{
+    right: -1.8px;
+}
+.c-bot-l{
+    left: -1.8px;
+    transform: scale(-1, -1);
+}
+.c-bot-r{
+    right: -1.8px;
+    transform: scale(-1,-1) rotate(-90deg);
+}
