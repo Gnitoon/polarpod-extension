@@ -15,9 +15,9 @@ Extension to use polarpod features in browser or access trough context menu
 4. install
 
     1. if was **dist branch** clone, click on "load unpacked" and select the diretory containing the extension files
-    2. if was **master branch** clone, with a terminal on the folder run ```npm install``` to install dependencies, ```npm run watch:dev``` to create "dist" folder, click on "load unpacked" and select the dist, or ```npm run build-zip``` for zip and "load packed"
+    2. if was **master branch** clone, with a terminal on the folder run ```npm install``` to install dependencies, ```npm run watch:dev``` to create "dist" folder, click on "load unpacked" and select the dist.
 
-    3. if was download from releases click on "load packed" and select the file
+    3. if was download from releases, extract the files, click on "load packed" and select the folder with extracted files
 
 5. select the directory containing the extension files and you are good to go
 
