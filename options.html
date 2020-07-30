@@ -1,21 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polarpod - extension settings</title>
+    <link rel="shortcut icon" href="./assets/logo/app_icon-dark.png" type="image/x-icon">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="./vue.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./assets/corners.css">
+
     <style>
-        button {
-            height: 30px;
-            width: 30px;
-            outline: none;
-            margin: 10px;
+        @font-face {
+            font-family: Icons-Regular;
+            /* font-weight: bold; */
+            src: url("./assets/fonts/Icons-Regular.otf") format("opentype");
         }
+        *{
+            font-family: 'Space Mono', sans-serif;
+        }
+        
+
+        .polar-theme{
+            --polar-blue:  #6FBAFF;
+            --polar-dark:  #222222;
+            --polar-light: #FFFFFF;
+
+            --polar-blue-fire: linear-gradient(190.3deg, #4DBFFF -4.08%, rgba(125, 203, 247, 0) 105.25%);
+
+            --card-bg: linear-gradient(0deg, rgba(97, 0, 255, 0.05), rgba(97, 0, 255, 0.05));
+            --mini-card: linear-gradient(0deg, rgba(77, 175, 255, 0.05), rgba(77, 175, 255, 0.05));
+
+            --main-bg:
+            linear-gradient(192.53deg,
+                rgba(97, 0, 255, 0.05) 0%,
+                #63626405 95.51%),
+            linear-gradient(170.34deg,
+                rgba(111, 186, 255, 0.06) 0.82%,
+                rgba(255, 255, 255, 0.03) 96.48%),
+            linear-gradient(0deg, #151515, #151515),
+            #FFFFFF;
+
+            --checkbox-bg: 
+            linear-gradient(0deg, rgba(77, 175, 255, 0.07), 
+            rgba(77, 175, 255, 0.07)), 
+            linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+            
+            --dark-icon-0: #454545;
+            --dark-icon-1: #3d3d3d;
+            --dark-icon-2: #222222;
+
+            --light-icon-0: #FFFFFF;
+            --light-icon-1: #BABABA;
+            --light-icon-2: #646464;
+            
+            --grey-5: #151515;
+            --grey-4: #222222;
+            --grey-3: #646464;
+            --grey-2: #909090;
+            --grey-2: #CECECE;
+            --grey-1: #F1F1F1;
+            --grey-0: #FFFFFF;
+
+            --text-light: #FFFFFF;
+            --text-sub:   #F1F1F1;
+            --text-dark:  #222222;
+
+        }
+
+        body{
+            background: var(--main-bg);
+            background-repeat: no-repeat;
+            height: calc(100vh - 16px);
+            color: var(--text-light);
+        }
+        .logo{
+            width: 180px;
+            padding: 20px;
+        }
+
+        .card{
+            background: var(--card-bg);
+            border-radius: 1px;;
+        }
+        .mini-card{
+            padding: 6px 25px;
+            /* background-image: url(./assets/mini-card-corners.svg); */
+            background: var(--mini-card);
+            font-weight: 600;
+            color: var(--polar-blue);
+            border-radius: 4px;
+            font-size: 110%;
+            position: relative;
+            min-width: 65px;
+            text-align: center;
+            transition: all 100ms ease-in-out;
+        }
+        .mini-card .corners{
+            width:  10px;
+            height: 8px;
+        }
+       
+        
+        /* menu  */
+        #content{
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+
+        /* menu  */
+        @media all {
+            
+            .actions{
+                width: 180px;
+                margin-left: 30px;
+                margin-right: 50px;
+                padding-top: 20px;
+            }
+            .action-item{
+                padding-left: 25px;
+                transition: all 20ms ease-in-out;
+                cursor: pointer;
+                user-select: none;
+                margin: 10px 10px;
+                font-weight: 300;
+            }
+            .action-item:hover{
+                padding: 0;
+                color: var(--polar-blue);
+            }
+            .action-item:hover::before{
+                content: '› [';
+            }
+            .action-item:hover::after{
+                content: ']';
+            }
+    
+            /* item selected */
+            .ai-selected::before{
+                content: '› [';
+            }
+            .ai-selected::after{
+                content: ']';
+            }
+            .ai-selected{
+                padding: 0;
+                color: var(--polar-blue);
+            }
+
+            #selected-menu-item{
+                width: -webkit-fill-available;
+                height: auto;
+            }
+        }
+
+
+        
+
+
+
     </style>
+    
 </head>
-<body>
-    <div id="buttonDiv">
+
+<!-- https://www.szynalski.com/tone-generator/ 227hz -->
+<!-- https://www.figma.com/file/oGReyZ3LJQ4bsyVbVmndQK/Polarpod?node-id=110%3A200 -->
+<body class="polar-theme">
+
+    <div id="polar">
+        <div id="header">
+            <a href="https://polarpod.herokuapp.com">
+                <img src="./assets/logo/POLARPOD-light.svg" class="logo" alt="logotype">
+            </a>
+        </div>
+
+        <div id="content">
+
+            <div id="menu-cont">
+    
+                <div class="actions">
+                    <h3
+                        v-for="(op, i) in opList.actions"
+                        :class="{'action-item':true, 'ai-selected': selected == i}"
+                        @click="selected = i"
+                    >{{op}}</h3>
+                </div>
+            </div>
+    
+            <div id="selected-item-cont">
+                
+                <div class="mini-card">
+                    <div class="mini-card-content">
+                        {{opList.actions[selected]}}
+                    </div>
+                    <corners/>
+                </div>
+
+
+                <div id="home" v-show="selected == 0">
+                    content
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-    <div>
-        <p>Choose a different background color!</p>
-    </div>
-    <script src="options.js"></script>
+
+    <script src="./options.js"></script>
+    
 </body>
 </html>

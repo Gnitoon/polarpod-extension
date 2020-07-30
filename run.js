@@ -3,27 +3,24 @@ chrome.runtime.onInstalled.addListener(function () {
         console.log("The color is green.");
     });
 
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-        chrome.declarativeContent.onPageChanged.addRules([{
-            conditions: [new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: { hostEquals: 'developer.chrome.com' },
-            })
-            ],
-            actions: [new chrome.declarativeContent.ShowPageAction()]
-        }]);
-    });
-
-    
     chrome.contextMenus.onClicked.addListener((data, tab) =>{
         console.log(data);
 
-        let url = "https://polarpod.herokuapp.com"
-        if(data.menuItemId == "cleanfb"){
-            url += `/cleanfb?url=${data.linkUrl}`
+        let url = `https://polarpod.herokuapp.com`
+
+        if(/ogtags|cleanfb|video|thumb/gi.test(data.menuItemId)){
+            
+            // temp, for thumbnails
+            // ! add redirect to open image after get thumb link on API
+            if(/thumb/gi.test(data.menuItemId)){
+                url += `/${data.menuItemId}?u=${data.linkUrl}`
+            }
+            else{
+                url += `/${data.menuItemId}?url=${data.linkUrl}`
+
+            }
         }
-        else if(data.menuItemId == "ogtags"){
-            url += `/ogtags?url=${data.linkUrl}`
-        }
+      
 
         chrome.tabs.create({url: url, index: tab.index + 1});
     });
@@ -51,6 +48,24 @@ chrome.runtime.onInstalled.addListener(function () {
         id: "ogtags",
         parentId:'polar-main',
         title: "Get Og tags",
+        contexts:['selection', 'link']
+        
+    });
+
+    // video
+    chrome.contextMenus.create({
+        id: "video",
+        parentId:'polar-main',
+        title: "Video meta",
+        contexts:['selection', 'link']
+        
+    });
+
+    // ogtags
+    chrome.contextMenus.create({
+        id: "apis/video/thumb",
+        parentId:'polar-main',
+        title: "Video thumbnail",
         contexts:['selection', 'link']
         
     });

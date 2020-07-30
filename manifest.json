@@ -15,17 +15,13 @@
     ],
     "optional_permissions":["https://*/", "http://*/"],
     "background": {
-        "scripts": ["run.js"],
+        "scripts": ["run.js", "vue.min.js"],
         "persistent": false
     },
-    "page_action": {
-        "default_popup": "popup.html",
-            "default_icon": {
-            "128": "assets/logo/app_icon-dark.png"
-        }
-    },
+    
     "icons": {
         "128": "assets/logo/app_icon-dark.png"
       },
-    "manifest_version": 2
-  }
+    "manifest_version": 2,
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
