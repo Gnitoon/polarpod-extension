@@ -1,13 +1,16 @@
-chrome.runtime.onInstalled.addListener(function () {
+chrome.runtime.onInstalled.addListener(onInstalled);
+
+
+function onInstalled(){
     chrome.storage.sync.set({ color: '#3aa757' }, function () {
         console.log("The color is green.");
     });
-
+    
     chrome.contextMenus.onClicked.addListener((data, tab) =>{
         console.log(data);
-
+    
         let url = `https://polarpod.herokuapp.com`
-
+    
         if(/ogtags|cleanfb|video|thumb/gi.test(data.menuItemId)){
             
             // temp, for thumbnails
@@ -17,15 +20,15 @@ chrome.runtime.onInstalled.addListener(function () {
             }
             else{
                 url += `/${data.menuItemId}?url=${data.linkUrl}`
-
+    
             }
         }
       
-
+    
         chrome.tabs.create({url: url, index: tab.index + 1});
     });
-
-
+    
+    
     // MAIN menu item
     chrome.contextMenus.create({
         id: "polar-main",
@@ -33,7 +36,7 @@ chrome.runtime.onInstalled.addListener(function () {
         contexts:['selection', 'link']
         
     });
-
+    
     // cleanfb
     chrome.contextMenus.create({
         id: "cleanfb",
@@ -42,7 +45,7 @@ chrome.runtime.onInstalled.addListener(function () {
         contexts:['selection', 'link']
         
     });
-
+    
     // ogtags
     chrome.contextMenus.create({
         id: "ogtags",
@@ -51,7 +54,7 @@ chrome.runtime.onInstalled.addListener(function () {
         contexts:['selection', 'link']
         
     });
-
+    
     // video
     chrome.contextMenus.create({
         id: "video",
@@ -60,7 +63,7 @@ chrome.runtime.onInstalled.addListener(function () {
         contexts:['selection', 'link']
         
     });
-
+    
     // ogtags
     chrome.contextMenus.create({
         id: "apis/video/thumb",
@@ -70,5 +73,18 @@ chrome.runtime.onInstalled.addListener(function () {
         
     });
 
+}
 
-});
+
+// https://stackoverflow.com/questions/33834785/chrome-extension-context-menu-not-working-after-update
+setTimeout(function() {
+    // This .update() call does not change the context menu if it exists,
+    // but sets chrome.runtime.lastError if the menu does not exist.
+    chrome.contextMenus.update("polar-main", {}, function() {
+        if (chrome.runtime.lastError) {
+            // Assume that crbug.com/388231 occured, manually call the
+            // onInstalled handler.
+            onInstalled();
+        }
+    });
+}, 222); // <-- Some short timeout.

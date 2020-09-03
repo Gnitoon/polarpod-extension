@@ -3,7 +3,7 @@
     <div id="polar">
         <div id="header">
             <a href="https://polarpod.herokuapp.com">
-                <img src="../assets/logo/POLARPOD-light.svg" class="logo" alt="logotype">
+                <img src="/assets/logo/POLARPOD-light.svg" class="logo" alt="logotype">
             </a>
         </div>
 
@@ -69,23 +69,53 @@
                                     <div id="openInApi">
                                         <a>Open context menu features in API</a>
 
-                                        <!-- <div class="checkbox">
-                                            <svg v-if="settings.useApi || true" class="check-out" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M31 28.612V31H29.6058M2.39416 31H1V28.619M1.00269 3.38799V1H2.39685M29.6058 1H31V3.38799" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                            <svg v-if="settings.useApi || true" class="checked" width="326" height="326" viewBox="0 0 326 326" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M12.75 12.75L34.1786 34.1786L77.0357 77.0357L119.893 119.893L130.607 130.607M312.75 12.75L291.321 34.1786L248.464 77.0357L205.607 119.893L194.893 130.607M312.75 312.75L291.321 291.321L248.464 248.464L205.607 205.607L194.893 194.893M12.75 312.75L34.1786 291.321L77.0357 248.464L119.893 205.607L130.607 194.893" stroke="white" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                                
-                                        </div> -->
+                                        <checkbox
+                                            width="24px"
+                                            :checked="settings.useApi"
+                                            @click="toggle('useApi')"
+                                        />
+
+                                    </div>
+
+                                    <div id="openInApi">
+                                        <a>Menu item sound</a>
 
                                         <checkbox
                                             width="24px"
-                                            v-bind:checked="settings.useApi"
-                                            @click="settings.useApi = !settings.useApi"
+                                            :checked="settings.itSound"
+                                            @click="toggle('itSound')"
                                         />
 
-                                        <br><br>
+                                    </div>
+
+                                    <h3>Items </h3>
+                                    <div id="context-menu-items-container">
+
+
+                                        <!-- all on -->
+                                        <div class="cmi-allon cmi-item">
+                                            <checkbox
+                                                width="24px"
+                                                :checked="settings.allon"
+                                                @click="toggle('allon')"
+                                            />
+                                            <a>All</a>
+                                        </div>
+                                        
+                                        
+                                        <!-- add to a array and loop to get all items -->
+                                        <div v-for="(end, i) in endpoints" class="cmi-item">
+                                            <checkbox
+                                                width="24px"
+                                                :checked="actives[i].active"
+                                                @click="toggle(end.id)"
+                                            />
+                                            <a>{{end.name}}</a> <br>
+                                            <a class="cmi-desc">{{end.desc}}</a>
+                                        </div>
+
+
+
 
                                     </div>
 
@@ -123,6 +153,9 @@ import 'simplebar/dist/simplebar.min.css';
 import corners from '../components/corners.vue'
 import checkbox from '../components/checkbox.vue'
 
+import endpoints from '../endpoints.js'
+console.log(endpoints);
+
 export default {
   	name: "Polar",
 	components:{
@@ -135,8 +168,11 @@ export default {
 		return {
 			hover: 0,
             selected: 4,
+            endAvail: endpoints.avail(),
             settings:{
-                useApi: false
+                useApi: false,
+                itSound: true,
+                allon: true,
             },
 			opList:{
 				actions:[
@@ -146,15 +182,60 @@ export default {
 					'Github',
 					'Settings'
 				],
-			},
+            },
+            endpoints: endpoints.endpoints,
+            actives:[
+
+            ]
         }
 		
-	},
+    },
+    created(){
+        this.actives = this.endpoints.map(el => {
+            return {
+                ...el.id,
+                ...el.active
+            }
+        })
+    },
     methods:{
         save: function(){
             chrome.storage.sync.set({settings: {...this.settings}}, function () {
-                console.log("saved");
+                console.warn("settings saved");
             });
+        },
+
+        /**
+        * @description toggle a item in settings and save to storage
+        * @param {String} what item to toggle in settings
+        */
+        toggle: function(what){
+            if(/useApi|itSound|allon/gi.test(what)){
+                this.settings[what] = !this.settings[what];
+            }
+
+            // can use array.includes()
+            if(this.endAvail.test(what)){
+  
+                this.actives.filter(el => {
+                    if(el.id == what){
+                        el.active = !el.active
+                    }
+                })
+                
+                //console.log("hi");
+                //if(this.actives.lastIndexOf(what) == -1){
+                //    this.actives.push(what)
+                //}
+                //else{
+                //    this.actives.splice(this.actives.lastIndexOf(what), 1)
+                //}
+            }
+
+            this.settings.actives = this.actives;
+
+            console.log(this.settings.actives);
+            //this.save()
         }
     }
 };

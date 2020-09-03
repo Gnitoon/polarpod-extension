@@ -7,7 +7,8 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { version } = require('./package.json');
 
 const config = {
-	mode: process.env.NODE_ENV,
+	// mode: process.env.NODE_ENV,
+	mode: "production",
 	context: __dirname + '/src',
 	entry: {
 		'run': './run.js',
@@ -49,7 +50,7 @@ const config = {
 				loader: 'file-loader',
 				options: {
 					name: '[path][name].[ext]',
-					outputPath: '/fonts/',
+
 					emitFile: true,
 					esModule: false,
 				},
